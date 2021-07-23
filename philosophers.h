@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 07:55:49 by abelarif          #+#    #+#             */
-/*   Updated: 2021/07/23 06:52:09 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/07/23 07:01:33 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@
 # define KMAG  "\x1B[35m"
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
+
+typedef struct s_philosophers
+{
+    int             nb;
+    int             forks;
+    int             time_to_die;
+    int             time_to_eat;
+    int             time_to_sleep;
+    int             eat_repeat;
+}                   t_philosophers;
+
 
 int         ft_isdigit(char c);
 int         ft_atoi(const char *str);
