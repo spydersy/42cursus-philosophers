@@ -6,7 +6,7 @@
 #    By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 09:38:27 by abelarif          #+#    #+#              #
-#    Updated: 2021/07/23 06:51:02 by abelarif         ###   ########.fr        #
+#    Updated: 2021/07/23 07:43:49 by abelarif         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ UTILS_SRCS=			./utils/ft_atoi.c\
 					./utils/ft_error.c\
 					./utils/ft_strlen.c\
 					./utils/ft_isdigit.c\
+					./utils/free_philos.c\
 
 SRCS=				$(UTILS_SRCS)\
 					$(PHILOSOPHERS_SRCS)\

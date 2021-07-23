@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 07:55:49 by abelarif          #+#    #+#             */
-/*   Updated: 2021/07/23 07:01:33 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/07/23 07:43:08 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 typedef struct s_philosophers
 {
     int             nb;
-    int             forks;
+    int             nbforks;
+    int             *forks;
     int             time_to_die;
     int             time_to_eat;
     int             time_to_sleep;
@@ -47,6 +48,7 @@ int         *parsing(int argc, char *argv[]);
 int         philosophers(int argc, char *argv[]);
 
 void        ft_error(char *descriptor);
+void        free_philos(t_philosophers *philos);
 
 size_t      ft_strlen(const char *str);
 
