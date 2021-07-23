@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/20 07:55:47 by abelarif          #+#    #+#             */
-/*   Updated: 2021/07/23 06:46:54 by abelarif         ###   ########.fr       */
+/*   Created: 2021/07/23 06:13:11 by abelarif          #+#    #+#             */
+/*   Updated: 2021/07/23 06:50:22 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../philosophers.h"
 
-int philosophers(int argc, char *argv[])
+int *parsing(int argc, char *argv[])
 {
+    int     i;
+    int     tmp;
     int     *args;
 
-    if (args_checker(argv) == 0)
-        return (0);
-    args = parsing(argc, argv);
-    return (0);
+    i = 0;
+    args = malloc(sizeof(int) * (argc - 1));
+    while (argv[++i])
+    {
+        tmp = ft_atoi(argv[i]);
+        if (tmp == 0)
+        {
+            free(args);
+            return (NULL);
+        }
+        else
+        {
+            args[i - 1] = tmp;
+        }
+    }
+    return (args);
 }

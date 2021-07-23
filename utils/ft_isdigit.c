@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/20 07:55:47 by abelarif          #+#    #+#             */
-/*   Updated: 2021/07/23 06:46:54 by abelarif         ###   ########.fr       */
+/*   Created: 2021/07/23 06:31:14 by abelarif          #+#    #+#             */
+/*   Updated: 2021/07/23 06:31:58 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../philosophers.h"
 
-int philosophers(int argc, char *argv[])
+int ft_isdigit(char c)
 {
-    int     *args;
-
-    if (args_checker(argv) == 0)
-        return (0);
-    args = parsing(argc, argv);
+    if ('0' <= c && c <= '9')
+        return (1);
     return (0);
 }
