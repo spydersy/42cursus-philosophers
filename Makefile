@@ -6,7 +6,7 @@
 #    By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 09:38:27 by abelarif          #+#    #+#              #
-#    Updated: 2021/07/23 07:43:49 by abelarif         ###   ########.fr        #
+#    Updated: 2021/07/23 07:56:23 by abelarif         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS=				$(UTILS_SRCS)\
 
 OBJS=			$(SRCS:.c=.o)
 
-FLAGS=			-Wall -Werror -Wextra
+FLAGS=			-Wall -Werror -Wextra -pthread
 
 $(NAME): $(OBJS)
 		clang-9 -g3 $(FLAGS) $(SRCS) -o $(NAME)
