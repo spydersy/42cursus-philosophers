@@ -6,11 +6,11 @@
 #    By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 09:38:27 by abelarif          #+#    #+#              #
-#    Updated: 2021/07/23 07:56:23 by abelarif         ###   ########.fr        #
+#    Updated: 2021/08/10 12:49:43 by abelarif         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=philosophers
+NAME=philo
 
 PHILOSOPHERS_SRCS=	main.c\
 					philosophers.c\
@@ -18,12 +18,10 @@ PHILOSOPHERS_SRCS=	main.c\
 PARSING_SRCS=		./parsing/parsing.c\
 					./parsing/args_checker.c\
 
-# EXECUTION_SRCS=		./execution/to_sorting.c\
-					# ./execution/to_execution.c\
-					# ./execution/small_sorting.c\
-					# ./execution/big_sorting.c\
+SIMULATION_SRCS=	./simulation/simulation.c\
 
-UTILS_SRCS=			./utils/ft_atoi.c\
+UTILS_SRCS=			./utils/time.c\
+					./utils/ft_atoi.c\
 					./utils/ft_error.c\
 					./utils/ft_strlen.c\
 					./utils/ft_isdigit.c\
@@ -32,7 +30,7 @@ UTILS_SRCS=			./utils/ft_atoi.c\
 SRCS=				$(UTILS_SRCS)\
 					$(PHILOSOPHERS_SRCS)\
 					$(PARSING_SRCS)\
-					# $(EXECUTION_SRCS)\
+					$(SIMULATION_SRCS)\
 
 OBJS=			$(SRCS:.c=.o)
 
