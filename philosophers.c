@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 07:55:47 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/10 11:32:11 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/10 18:19:18 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_philosophers  *init_philos(int *args)
         philos[i].time_to_sleep = args[3];
         philos[i].eat_repeat = args[4];
         philos[i].lock_mutex = lock;
+        philos[i].philo_status = BEF_SIMUL;
     }
     return (philos);
 }
@@ -80,7 +81,7 @@ int philosophers(int argc, char *argv[])
         philos = init_philos(args);
     else
         return (-1);
-    print_philo(philos);
+    // print_philo(philos);
     simulation(philos);
     free_philos(philos);
     return (0);

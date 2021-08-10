@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 07:55:49 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/10 12:48:25 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/10 19:11:16 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 
 # define DBG(A) printf("A\n");
 
+# define TRUE   1
+# define FALSE  0
+
 # define KNRM  "\x1B[0m"
 # define KRED  "\x1B[31m"
 # define KGRN  "\x1B[32m"
@@ -38,11 +41,20 @@
 # define PH_THINKING    "\x1B[32m is thinking \x1B[37m"
 # define PH_DIED        "\x1B[31m died \x1B[37m"
 
+# define BEF_SIMUL          -1
+# define IN_SIM             +0
+# define DIED_STATUS        +1
+# define EATING_STATUS      +2
+# define SLEEPING_STATUS    +3
+# define THINKING_STATUS    +4
+# define TAKE_FORKS_STATUS  +5
+
 typedef struct s_philosophers
 {
     int                 nb;
     int                 id;
     int                 *forks;
+    int                 status;
     int                 time_to_die;
     int                 time_to_eat;
     int                 time_to_sleep;
@@ -52,8 +64,8 @@ typedef struct s_philosophers
 	pthread_mutex_t     *lock_mutex;
     unsigned long long  last_meal;
     unsigned long long  creation_time;
+    unsigned long long  death_time;
 }                       t_philosophers;
-
 
 int         simulation(t_philosophers *philos);
 int         ft_isdigit(char c);
@@ -64,6 +76,7 @@ int         philosophers(int argc, char *argv[]);
 
 void        ft_error(char *descriptor);
 void        free_philos(t_philosophers *philos);
+void        print_status(t_philosophers *philo, int status, unsigned long long time, int id);
 
 size_t      ft_strlen(const char *str);
 
