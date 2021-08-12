@@ -6,7 +6,7 @@
 #    By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 09:38:27 by abelarif          #+#    #+#              #
-#    Updated: 2021/08/10 12:49:43 by abelarif         ###   ########.fr        #
+#    Updated: 2021/08/11 08:15:17 by abelarif         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ PHILOSOPHERS_SRCS=	main.c\
 PARSING_SRCS=		./parsing/parsing.c\
 					./parsing/args_checker.c\
 
-SIMULATION_SRCS=	./simulation/simulation.c\
+SIMULATION_SRCS=	./simulation/actions.c\
+					./simulation/simulation.c\
 
 UTILS_SRCS=			./utils/time.c\
 					./utils/ft_atoi.c\
@@ -26,6 +27,7 @@ UTILS_SRCS=			./utils/time.c\
 					./utils/ft_strlen.c\
 					./utils/ft_isdigit.c\
 					./utils/free_philos.c\
+					./utils/print_status.c\
 
 SRCS=				$(UTILS_SRCS)\
 					$(PHILOSOPHERS_SRCS)\

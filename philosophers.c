@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 07:55:47 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/10 18:19:18 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/12 12:43:55 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    print_philo(t_philosophers *philo)
     printf("eat repeat    : [%d]\n", philo[0].eat_repeat);
 }
 
-t_philosophers  *init_philos(int *args)
+t_philosophers  *init_philos(int *args, int argc)
 {
     int             i;
     int             *forks;
@@ -62,9 +62,13 @@ t_philosophers  *init_philos(int *args)
         philos[i].time_to_die = args[1];
         philos[i].time_to_eat = args[2];
         philos[i].time_to_sleep = args[3];
-        philos[i].eat_repeat = args[4];
+        if (argc == 5)
+            philos[i].eat_repeat = args[4];
+        else
+            philos[i].eat_repeat = -1;
         philos[i].lock_mutex = lock;
-        philos[i].philo_status = BEF_SIMUL;
+        philos[i].last_meal = 0;
+        philos[i].status = BEF_SIMUL;
     }
     return (philos);
 }
@@ -78,7 +82,7 @@ int philosophers(int argc, char *argv[])
         return (0);
     args = parsing(argc, argv);
     if (args != NULL)
-        philos = init_philos(args);
+        philos = init_philos(args, argc - 1);
     else
         return (-1);
     // print_philo(philos);

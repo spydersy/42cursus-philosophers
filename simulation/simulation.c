@@ -6,60 +6,73 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:19:50 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/10 19:38:42 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/12 13:08:39 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
+int     break_simulation(t_philosophers *philo)
+{
+    print_status(philo, DIED_STATUS, philo->death_time);
+    return (1);
+}
+
 void    *PhiloThreadFun(void *arg)
 {
-    t_philosophers  *philos;
+    t_philosophers  *philo;
+    static int      died = 0;
+    philo = (t_philosophers*)arg;
 
-    philos = (t_philosophers*)arg;
-
-    printf("FROM PHILO[%d] created at : %llu\n", philos->id, philos->creation_time);
-    philos->status = IN_SIM;
-    while (TRUE)
+    philo->status = IN_SIM;
+    while (died == 0)
     {
-        philos->status = eat_simulation(philos);
-        if (philos->status == DIED_STATUS)
+        philo = eat_simulation(philo);
+        sleep(1);
+        if (philo->status == DIED_STATUS && (died = break_simulation(philo)))
         {
-            print_status(philos, DIED_STATUS, philos->death_time, philos->id);
+            printf("XXXXXXXXXXXXXXXXXXXXX\n");
             break ;
         }
-        philos->status = sleep_simulation(philos);
-        if (philos->status == DIED_STATUS)
+        philo = sleep_simulation(philo);
+        sleep(1);
+        if (philo->status == DIED_STATUS && (died = break_simulation(philo)))
         {
-            print_status(philos, DIED_STATUS, philos->death_time, philos->id);
+            printf("YYYYYYYYYYYYYYYYYYYYY\n");
             break ;
         }
-        philos->status = think_simulation(philos);
-        if (philos->status == DIED_STATUS)
+        philo = think_simulation(philo);
+        sleep(1);
+        if (philo->status == DIED_STATUS && (died = break_simulation(philo)))
         {
-            print_status(philos, DIED_STATUS, philos->death_time, philos->id);
+            printf("ZZZZZZZZZZZZZZZZZZZZZZ\n");
             break ;
         }
     }
-    return NULL;
+    return (NULL);
 }
 
 int     simulation(t_philosophers *philos)
 {
     int         i;
+    pthread_t   *supervisor;
 
     i = -1;
-    while (++i < philos[0].nb)
+    supervisor = malloc(sizeof(pthread_t));
+    while (TRUE)
     {
-        philos[i].creation_time = get_current_time();
-        if (pthread_create(&(philos[i].ph_thread), NULL,
-        PhiloThreadFun, (void*)&philos[i]) != 0)
+        while (++i < philos[0].nb)
         {
-            ft_error("Cant create thread");
-        }
-        else
-        {
-            usleep(500);
+            philos[i].creation_time = get_time();
+            if (pthread_create(&(philos[i].ph_thread), NULL,
+            PhiloThreadFun, (void*)&philos[i]) != 0)
+            {
+                ft_error("Cant create thread");
+            }
+            else
+            {
+                usleep(500);
+            }
         }
     }
     return (0);
