@@ -1,0 +1,26 @@
+void	create_threads(t_philosopher *philos, int number_philos)
+{
+	int				i;
+	t_philosopher	*tmp;
+	t_supervisor	supervisor;
+
+	i = 0;
+	if (philos == NULL)
+		return ;
+	tmp = philos;
+	supervisor.philosophers = philos;
+	supervisor.write_mutex = philos->write_mutex;
+	if (pthread_create(&(supervisor.superv_thread), NULL,
+			supervisor_life, &supervisor) != 0)
+		fatal("create supervisor thread failed!");
+	while (i < number_philos && tmp != NULL)
+	{
+		create_philosopher_thread(tmp);
+		i++;
+		tmp = tmp->next;
+	}
+	if (pthread_join(supervisor.superv_thread, NULL) != 0)
+		fatal("join supervisor thread failed!");
+	detach_philosophers(philos);
+	clear_philosophers(&philos);
+}
