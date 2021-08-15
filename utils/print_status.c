@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 18:33:39 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/12 13:03:05 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/12 13:25:28 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,32 @@ void    print_eat(unsigned long long time, int id, t_philosophers *philo)
     printf("\n");
 }
 
-void    print_sleep(unsigned long long time, int id)
+void    print_sleep(unsigned long long time, int id, t_philosophers *philo)
 {
     printf("%s%llu%s ", KBLU, time, KWHT);
     printf("%d ", id + 1);
     printf("%s\n", PH_SLEEPING);
+    printf(" ");
+    int     i = -1;
+    while (++i < philo->nb)
+    {
+        printf("[%d], ", philo->forks[i]);
+    }
+    printf("\n");
 }
 
-void    print_think(unsigned long long time, int id)
+void    print_think(unsigned long long time, int id, t_philosophers *philo)
 {
     printf("%s%llu%s ", KBLU, time, KWHT);
     printf("%d ", id + 1);
     printf("%s\n", PH_THINKING);
+    printf(" ");
+    int     i = -1;
+    while (++i < philo->nb)
+    {
+        printf("[%d], ", philo->forks[i]);
+    }
+    printf("\n");
 }
 
 void    print_status(t_philosophers *philo, int status, unsigned long long time)
@@ -63,7 +77,7 @@ void    print_status(t_philosophers *philo, int status, unsigned long long time)
     int     id;
 
     id = philo->id;
-    pthread_mutex_unlock(philo->lock_mutex);
+    pthread_mutex_lock(philo->lock_mutex);
     if (status == DIED_STATUS)
     {
         print_death(time, id);
@@ -74,15 +88,15 @@ void    print_status(t_philosophers *philo, int status, unsigned long long time)
     }
     else if (status == SLEEPING_STATUS)
     {
-        print_sleep(time, id);
+        print_sleep(time, id, philo);
     }
     else if (status == THINKING_STATUS)
     {
-        print_think(time, id);
+        print_think(time, id, philo);
     }
     else if (status == TAKE_FORKS_STATUS)
     {
         print_forks(time, id);
     }
-    pthread_mutex_lock(philo->lock_mutex);
+    pthread_mutex_unlock(philo->lock_mutex);
 }

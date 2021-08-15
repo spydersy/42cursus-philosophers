@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:19:50 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/12 13:08:39 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/12 13:33:22 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int     simulation(t_philosophers *philos)
 
     i = -1;
     supervisor = malloc(sizeof(pthread_t));
-    while (TRUE)
-    {
         while (++i < philos[0].nb)
         {
             philos[i].creation_time = get_time();
@@ -74,6 +72,9 @@ int     simulation(t_philosophers *philos)
                 usleep(500);
             }
         }
-    }
+        while (TRUE)
+        {
+            printf("SI LQLAWI\n");
+        }
     return (0);
 }

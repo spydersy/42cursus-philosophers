@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:16:54 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/12 13:06:53 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/12 13:25:10 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_philosophers                *set_forks_index(t_philosophers *philo)
 
 t_philosophers     *eat_simulation(t_philosophers *philosopher)
 {
-    pthread_mutex_unlock(philosopher->forks_mutex);
+    pthread_mutex_lock(philosopher->forks_mutex);
     if (get_forks_index(philosopher) == 1)
     {
         philosopher->status = EATING_STATUS;
@@ -78,7 +78,7 @@ t_philosophers     *eat_simulation(t_philosophers *philosopher)
         philosopher->last_meal = get_time();
         philosopher = set_forks_index(philosopher);
     }
-    pthread_mutex_lock(philosopher->forks_mutex);
+    pthread_mutex_unlock(philosopher->forks_mutex);
     return (philosopher);
 }
 
