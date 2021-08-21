@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   free_philosophers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/15 09:08:53 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/15 14:14:32 by abelarif         ###   ########.fr       */
+/*   Created: 2021/08/15 14:31:51 by abelarif          #+#    #+#             */
+/*   Updated: 2021/08/15 14:33:58 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_sleep(unsigned long long time_sleep)
+void	free_philosophers(t_data *data)
 {
-	unsigned int	stop;
-	unsigned int	start;
+	int		i;
 
-	stop = get_time() + time_sleep;
-	start = get_time();
-	while (start < stop)
+	i = -1;
+	while (++i < data->number_of_philosophers)
 	{
-		usleep(50);
-		start = get_time();
+
 	}
-}
-
-unsigned long long	get_time(void)
-{
-	struct timeval		timeval;
-	unsigned long long	current_time;
-
-	gettimeofday(&timeval, NULL);
-	current_time = (timeval.tv_sec * 1000) + (timeval.tv_usec / 1000);
-	return (current_time);
 }

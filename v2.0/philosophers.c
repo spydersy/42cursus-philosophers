@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 08:59:21 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/15 13:36:30 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/15 14:33:15 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	*simulation(void *args)
 {
-    t_philosophers  *philosophers;
+	t_philosophers		*philosophers;
 
-    philosophers = (t_philosophers *)args;
+	philosophers = (t_philosophers *)args;
 	while (1)
 	{
 		pthread_mutex_lock(philosophers->left_fork_mutex);
@@ -34,12 +34,12 @@ void	*simulation(void *args)
 		ft_sleep(philosophers->time_to_sleep);
 		print_status(philosophers, THINK_STATUS);
 	}
-    return (NULL);
+	return (NULL);
 }
 
-static void	check_died_status(t_data *data)
+void	check_died_status(t_data *data)
 {
-	int	i;
+	int		i;
 
 	i = data->number_of_philosophers;
 	while (i == data->number_of_philosophers)
@@ -48,10 +48,11 @@ static void	check_died_status(t_data *data)
 		data->number_of_meal = 0;
 		while (i < data->number_of_philosophers)
 		{
-			if (get_time() - data->philosophers[i].life_cycle >= (unsigned int)data->time_to_die)
+			if (get_time() - data->philosophers[i].life_cycle
+				>= (unsigned int)data->time_to_die)
 				break ;
 			if (data->repeat_eat != -1
-            && data->philosophers[i].count_eat >= data->repeat_eat)
+				&& data->philosophers[i].count_eat >= data->repeat_eat)
 				data->number_of_meal++;
 			i++;
 		}
@@ -64,13 +65,14 @@ static void	check_died_status(t_data *data)
 
 int	philosophers_thread(t_data *data)
 {
-	int	i;
+	int			i;
 
 	i = -1;
-    while (++i < data->number_of_philosophers)
+	while (++i < data->number_of_philosophers)
 	{
 		data->philosophers[i].life_cycle = get_time();
-		data->philosophers[i].start_of_simulation = data->philosophers[i].life_cycle;
+		data->philosophers[i].start_of_simulation
+			= data->philosophers[i].life_cycle;
 		if (pthread_create(&data->philosophers[i].flow_mutex, NULL, simulation, \
 		(void *)&data->philosophers[i]))
 			return (1);
@@ -78,5 +80,6 @@ int	philosophers_thread(t_data *data)
 		usleep(100);
 	}
 	check_died_status(data);
+    free_philosophers(data);
 	return (0);
 }
