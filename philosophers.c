@@ -5,88 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/20 07:55:47 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/12 12:43:55 by abelarif         ###   ########.fr       */
+/*   Created: 2021/08/15 08:59:21 by abelarif          #+#    #+#             */
+/*   Updated: 2021/08/29 14:07:44 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void    print_philo(t_philosophers *philo)
+void	*simulation(void *args)
 {
-    printf("nb philo      : [%d]\n", philo[0].nb);
-    printf("nb forks      : [%d]\n", philo[0].nb);
-    int     i;
-    i = -1;
-    printf("forks         : ");
-    while (++i < philo[0].nb)
-    {
-        printf("[%d] ", philo[0].forks[i]);
-    }
-    printf("\ntime to die   : [%d]\n", philo[0].time_to_die);
-    printf("time to eat   : [%d]\n", philo[0].time_to_eat);
-    printf("time to sleep : [%d]\n", philo[0].time_to_sleep);
-    printf("eat repeat    : [%d]\n", philo[0].eat_repeat);
+	t_philosophers		*philosophers;
+
+	philosophers = (t_philosophers *)args;
+	while (1)
+	{
+		pthread_mutex_lock(philosophers->left_fork_mutex);
+		print_status(philosophers, TAKE_FORKS_STATUS);
+		pthread_mutex_lock(philosophers->right_fork_mutex);
+		print_status(philosophers, TAKE_FORKS_STATUS);
+		philosophers->life_cycle = get_time();
+		philosophers->count_eat++;
+		print_status(philosophers, EAT_STATUS);
+		ft_sleep(philosophers->time_to_eat);
+		pthread_mutex_unlock(philosophers->left_fork_mutex);
+		usleep(100);
+		pthread_mutex_unlock(philosophers->right_fork_mutex);
+		print_status(philosophers, SLEEP_STATUS);
+		ft_sleep(philosophers->time_to_sleep);
+		print_status(philosophers, THINK_STATUS);
+	}
+	return (NULL);
 }
 
-t_philosophers  *init_philos(int *args, int argc)
+void	check_died_status(t_data *data)
 {
-    int             i;
-    int             *forks;
-    t_philosophers  *philos;
-    pthread_mutex_t *lock;
+	int		i;
 
-    i = -1;
-    philos = malloc(sizeof(t_philosophers) * args[0]);
-    forks= malloc(sizeof(int) * args[0]);
-    lock = malloc(sizeof(pthread_mutex_t));
-    if (philos == NULL || forks == NULL || lock == NULL)
-    {
-        ft_error("MALLOC");
-    }
-    while (++i < args[0])
-    {
-        forks[i] = 1;
-    }
-    i = -1;
-    while (++i < args[0])
-    {
-        philos[i].forks_mutex = malloc(sizeof(pthread_mutex_t));
-        if (philos[i].forks_mutex == NULL)
-        {
-            ft_error("MUTEX");
-        }
-        philos[i].id = i;
-        philos[i].nb = args[0];
-        philos[i].forks = forks;
-        philos[i].time_to_die = args[1];
-        philos[i].time_to_eat = args[2];
-        philos[i].time_to_sleep = args[3];
-        if (argc == 5)
-            philos[i].eat_repeat = args[4];
-        else
-            philos[i].eat_repeat = -1;
-        philos[i].lock_mutex = lock;
-        philos[i].last_meal = 0;
-        philos[i].status = BEF_SIMUL;
-    }
-    return (philos);
+	i = data->number_of_philosophers;
+	while (i == data->number_of_philosophers)
+	{
+		i = 0;
+		data->number_of_meal = 0;
+		while (i < data->number_of_philosophers)
+		{
+			if (get_time() - data->philosophers[i].life_cycle
+				>= (unsigned int)data->time_to_die)
+				break ;
+			if (data->repeat_eat != -1
+				&& data->philosophers[i].count_eat >= data->repeat_eat)
+				data->number_of_meal++;
+			i++;
+		}
+		if (data->repeat_eat != -1 && data->number_of_meal == \
+		data->number_of_philosophers)
+			return ;
+	}
+	print_status(&data->philosophers[i], DIED_STATUS);
 }
 
-int philosophers(int argc, char *argv[])
+int	philosophers_thread(t_data *data)
 {
-    int                 *args;
-    t_philosophers      *philos;
+	int			i;
 
-    if (args_checker(argv) == 0)
-        return (0);
-    args = parsing(argc, argv);
-    if (args != NULL)
-        philos = init_philos(args, argc - 1);
-    else
-        return (-1);
-    // print_philo(philos);
-    simulation(philos);
-    free_philos(philos);
-    return (0);
+	i = -1;
+	while (++i < data->number_of_philosophers)
+	{
+		data->philosophers[i].life_cycle = get_time();
+		data->philosophers[i].start_of_simulation
+			= data->philosophers[i].life_cycle;
+		if (pthread_create(&data->philosophers[i].flow_mutex, NULL, simulation, \
+		(void *)&data->philosophers[i]))
+			return (1);
+		pthread_detach(data->philosophers[i].flow_mutex);
+		usleep(100);
+	}
+	check_died_status(data);
+    // free_philosophers(data);
+	return (0);
 }

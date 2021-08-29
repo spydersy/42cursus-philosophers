@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/15 06:38:20 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/15 14:00:59 by abelarif         ###   ########.fr       */
+/*   Created: 2021/08/15 09:08:53 by abelarif          #+#    #+#             */
+/*   Updated: 2021/08/15 14:14:32 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
+void	ft_sleep(unsigned long long time_sleep)
 {
-	t_data		*data;
+	unsigned int	stop;
+	unsigned int	start;
 
-	if (argc > 6 || argc < 5)
+	stop = get_time() + time_sleep;
+	start = get_time();
+	while (start < stop)
 	{
-		return (ft_error("ARGUMENTS"));
+		usleep(50);
+		start = get_time();
 	}
-	data = malloc(sizeof(t_data) * 1);
-	if (data == NULL)
-		return (-1);
-	if (init_data(data, argc, argv) == -1)
-		return (-1);
-	return (0);
+}
+
+unsigned long long	get_time(void)
+{
+	struct timeval		timeval;
+	unsigned long long	current_time;
+
+	gettimeofday(&timeval, NULL);
+	current_time = (timeval.tv_sec * 1000) + (timeval.tv_usec / 1000);
+	return (current_time);
 }

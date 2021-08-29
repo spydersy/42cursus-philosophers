@@ -5,26 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/20 07:55:49 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/11 11:58:09 by abelarif         ###   ########.fr       */
+/*   Created: 2021/08/14 12:35:08 by abelarif          #+#    #+#             */
+/*   Updated: 2021/08/15 14:07:14 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
-#define PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <limits.h>
-
-# define DBG(A)                 printf("A\n");
-
-# define TRUE                   1
-# define FALSE                  0
+# include <stdio.h>
+# include <unistd.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <sys/time.h>
 
 # define KNRM                   "\x1B[0m"
 # define KRED                   "\x1B[31m"
@@ -35,55 +28,54 @@
 # define KCYN                   "\x1B[36m"
 # define KWHT                   "\x1B[37m"
 
-# define PH_EATING              "\x1B[32m is eating \x1B[37m"
-# define PH_FORK                "\x1B[32m has taken a fork \x1B[37m"
-# define PH_SLEEPING            "\x1B[32m is sleeping \x1B[37m"
-# define PH_THINKING            "\x1B[32m is thinking \x1B[37m"
-# define PH_DIED                "\x1B[31m died \x1B[37m"
+# define DIED_STATUS            1
+# define EAT_STATUS             2
+# define SLEEP_STATUS           3
+# define THINK_STATUS           4
+# define TAKE_FORKS_STATUS      5
 
-# define BEF_SIMUL              -1
-# define IN_SIM                 +0
-# define DIED_STATUS            +1
-# define EATING_STATUS          +2
-# define SLEEPING_STATUS        +3
-# define THINKING_STATUS        +4
-# define TAKE_FORKS_STATUS      +5
+# define PH_EATING              "\x1B[32m is eating \x1B[37m"
+# define PH_FORK                "\x1B[33m has taken a fork \x1B[37m"
+# define PH_SLEEPING            "\x1B[37m is sleeping \x1B[37m"
+# define PH_THINKING            "\x1B[34m is thinking \x1B[37m"
+# define PH_DIED                "\x1B[31m died \x1B[37m"
 
 typedef struct s_philosophers
 {
-    int                 nb;
-    int                 id;
-    int                 *forks;
-    int                 status;
-    int                 time_to_die;
-    int                 time_to_eat;
-    int                 time_to_sleep;
-    int                 eat_repeat;
-    pthread_t           ph_thread;
-	pthread_mutex_t     *forks_mutex;
-	pthread_mutex_t     *lock_mutex;
-    unsigned long long  last_meal;
-    unsigned long long  creation_time;
-    unsigned long long  death_time;
-}                       t_philosophers;
+	int					id;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					count_eat;
+	unsigned long long	life_cycle;
+	unsigned long long	start_of_simulation;
+	pthread_t			flow_mutex;
+	pthread_mutex_t		*left_fork_mutex;
+	pthread_mutex_t		*right_fork_mutex;
+	pthread_mutex_t		*status_mutex;
+}						t_philosophers;
 
-int                     ft_isdigit(char c);
-int                     ft_atoi(const char *str);
-int                     args_checker(char *argv[]);
-int                     *parsing(int argc, char *argv[]);
-int                     simulation(t_philosophers *philos);
-int                     philosophers(int argc, char *argv[]);
+typedef struct s_data
+{
+	int						number_of_philosophers;
+	int						time_to_die;
+	int						time_to_eat;
+	int						time_to_sleep;
+	int						repeat_eat;
+	int						number_of_meal;
+	t_philosophers			*philosophers;
+	pthread_mutex_t			*forks_mutex;
+	pthread_mutex_t			status_mutex;
+}							t_data;
 
-void                    ft_error(char *descriptor);
-void                    free_philos(t_philosophers *philos);
-void                    print_status(t_philosophers *philo, int status, unsigned long long time);
-
-size_t                  ft_strlen(const char *str);
-
-t_philosophers         *eat_simulation(t_philosophers *philosopher);
-t_philosophers         *think_simulation(t_philosophers *philosopher);
-t_philosophers         *sleep_simulation(t_philosophers *philosopher);
-
-unsigned long long      get_time(void);
+int					ft_isdigit(char c);
+int					ft_atoi(const char *str);
+int					ft_error(const char *description);
+int					args_checker(char **argv);
+int					philosophers_thread(t_data *data);
+int					init_data(t_data *data, int argc, char **argv);
+void				print_status(t_philosophers *philosopher, int status);
+void				ft_sleep(unsigned long long time_sleep);
+size_t				ft_strlen(const char *str);
+unsigned long long	get_time(void);
 
 #endif

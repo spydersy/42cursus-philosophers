@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_philosophers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/15 06:38:20 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/15 14:00:59 by abelarif         ###   ########.fr       */
+/*   Created: 2021/08/15 14:31:51 by abelarif          #+#    #+#             */
+/*   Updated: 2021/08/15 14:33:58 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
+void	free_philosophers(t_data *data)
 {
-	t_data		*data;
+	int		i;
 
-	if (argc > 6 || argc < 5)
+	i = -1;
+	while (++i < data->number_of_philosophers)
 	{
-		return (ft_error("ARGUMENTS"));
+
 	}
-	data = malloc(sizeof(t_data) * 1);
-	if (data == NULL)
-		return (-1);
-	if (init_data(data, argc, argv) == -1)
-		return (-1);
-	return (0);
 }
