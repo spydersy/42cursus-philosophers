@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 07:07:22 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/15 14:00:14 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/29 14:21:50 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,19 @@ void	assigne_forks(t_data *data)
 		else
 			data->philosophers[i].left_fork_mutex = &data->forks_mutex[i - 1];
 		data->philosophers[i].right_fork_mutex = &data->forks_mutex[i];
-	}
+
+
+        if (i < data->number_of_philosophers - 1)
+		{
+			data->philosophers[i].left_fork_mutex = &data->forks_mutex[i];
+			data->philosophers[i].right_fork_mutex = &data->forks_mutex[i + 1];
+		}
+		else
+		{
+			data->philosophers[i].left_fork_mutex = &data->forks_mutex[0];
+			data->philosophers[i].right_fork_mutex = &data->forks_mutex[i];
+		}
+    }
 }
 
 int	init_philosophers(t_data *data)
