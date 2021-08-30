@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 12:35:08 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/30 15:39:59 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/30 17:02:53 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@
 # define EAT_STATUS             2
 # define SLEEP_STATUS           3
 # define THINK_STATUS           4
-# define TAKE_FORKS_STATUS      5
+# define TAKE_FORKS_STATUS_LEFT      5
+# define TAKE_FORKS_STATUS_RIGHT      6
 
 # define PH_EATING              "\x1B[32m is eating \x1B[37m"
-# define PH_FORK                "\x1B[33m has taken a fork \x1B[37m"
+# define PH_LEFT_FORK                "\x1B[33m has taken a fork (LEFT) \x1B[37m"
+# define PH_RIGHT_FORK                "\x1B[33m has taken a fork (RIGHT)\x1B[37m"
 # define PH_SLEEPING            "\x1B[37m is sleeping \x1B[37m"
 # define PH_THINKING            "\x1B[34m is thinking \x1B[37m"
 # define PH_DIED                "\x1B[31m died \x1B[37m"
