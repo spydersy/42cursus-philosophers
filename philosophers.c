@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 08:59:21 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/30 16:22:59 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:32:16 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*simulation(void *args)
 	return (NULL);
 }
 
-void	check_died_status(t_data *data)
+int	check_died_status(t_data *data)
 {
 	int		i;
 
@@ -61,9 +61,10 @@ void	check_died_status(t_data *data)
 		}
 		if (data->repeat_eat != -1 && data->number_of_meal ==
 		data->number_of_philosophers)
-			return ;
+			return (0);
 	}
 	print_status(&data->philosophers[i], DIED_STATUS);
+	return (0);
 }
 
 int	philosophers_thread(t_data *data)
@@ -88,7 +89,7 @@ int	philosophers_thread(t_data *data)
 		pthread_detach(data->philosophers[i].flow_mutex);
 		usleep(100);
 	}
-	check_died_status(data);
+	return (check_died_status(data));
     // free_philosophers(data);
 	return (0);
 }
