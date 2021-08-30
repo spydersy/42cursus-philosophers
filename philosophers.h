@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 12:35:08 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/15 14:07:14 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:39:59 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_data
 	int						number_of_meal;
 	t_philosophers			*philosophers;
 	pthread_mutex_t			*forks_mutex;
-	pthread_mutex_t			status_mutex;
+	pthread_mutex_t			*status_mutex;
 }							t_data;
 
 int					ft_isdigit(char c);

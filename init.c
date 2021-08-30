@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 07:07:22 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/29 14:21:50 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:43:29 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,13 @@ void	assigne_forks(t_data *data)
 		data->philosophers[i].count_eat = 0;
 		data->philosophers[i].time_to_eat = data->time_to_eat;
 		data->philosophers[i].time_to_sleep = data->time_to_sleep;
-		data->philosophers[i].status_mutex = &data->status_mutex;
+		data->philosophers[i].status_mutex = data->status_mutex;
 		if (i == 0)
 			data->philosophers[i].left_fork_mutex
 				= &data->forks_mutex[data->number_of_philosophers];
 		else
 			data->philosophers[i].left_fork_mutex = &data->forks_mutex[i - 1];
 		data->philosophers[i].right_fork_mutex = &data->forks_mutex[i];
-
-
         if (i < data->number_of_philosophers - 1)
 		{
 			data->philosophers[i].left_fork_mutex = &data->forks_mutex[i];
@@ -94,6 +92,10 @@ int	data_checker(t_data *data)
 	{
 		return (ft_error("WRONG VALUE"));
 	}
+	data->status_mutex = malloc(sizeof(pthread_mutex_t) * 1);
+	if (data->status_mutex == NULL)
+		ft_error("MUTEX");
+	pthread_mutex_init(data->status_mutex, NULL);
 	return (0);
 }
 
