@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 08:59:21 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/30 17:19:52 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:01:20 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,17 @@ void	*simulation(void *args)
 	{
 		pthread_mutex_lock(philosophers->left_fork_mutex);
 		philosophers->life_cycle = get_time();
-		printf("A");
 		print_status(philosophers, TAKE_FORKS_STATUS_LEFT);
 		pthread_mutex_lock(philosophers->right_fork_mutex);
-		printf("B");
 		print_status(philosophers, TAKE_FORKS_STATUS_RIGHT);
 		philosophers->count_eat++;
-		printf("C");
 		print_status(philosophers, EAT_STATUS);
 		philosophers->life_cycle = get_time();
 		ft_sleep(philosophers->time_to_eat);
 		pthread_mutex_unlock(philosophers->left_fork_mutex);
 		pthread_mutex_unlock(philosophers->right_fork_mutex);
-		printf("D");
 		print_status(philosophers, SLEEP_STATUS);
 		ft_sleep(philosophers->time_to_sleep);
-		printf("E");
 		print_status(philosophers, THINK_STATUS);
 	}
 	return (NULL);
@@ -87,7 +82,8 @@ int	philosophers_thread(t_data *data)
 		pthread_detach(data->philosophers[i].flow_mutex);
 		usleep(100);
 	}
-	return (check_died_status(data));
+	// return (check_died_status(data));
     // free_philosophers(data);
+	check_died_status(data);
 	return (0);
 }

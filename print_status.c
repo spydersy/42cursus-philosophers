@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 18:33:39 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/30 17:14:22 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:20:24 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	print_status(t_philosophers *philosopher, int status)
 
 
 	time = get_time();
-	pthread_mutex_lock(philosopher->status_mutex);
 	if (died == 1)
-		return ;
+		return ;	
+	pthread_mutex_lock(philosopher->status_mutex);
 	if (status != DIED_STATUS)
 	{
 		if (status == TAKE_FORKS_STATUS_LEFT)
@@ -40,7 +40,7 @@ void	print_status(t_philosophers *philosopher, int status)
 	{
 		printf("%s%llu%s %d %s\n", KCYN, time, KWHT, philosopher->id, PH_DIED);
 		died = 1;
-		pthread_mutex_lock(philosopher->status_mutex);
+		pthread_mutex_unlock(philosopher->status_mutex);
 		return ;
 	}
 }
