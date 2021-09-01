@@ -6,7 +6,7 @@
 #    By: abelarif <abelarif@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 09:38:27 by abelarif          #+#    #+#              #
-#    Updated: 2021/08/30 14:27:03 by abelarif         ###   ########.fr        #
+#    Updated: 2021/09/01 18:49:55 by abelarif         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS=	main.c\
 		utils.c\
 		philosophers.c\
 		print_status.c\
+		free_philosophers.c\
 
 OBJS=	$(SRCS:.c=.o)
 

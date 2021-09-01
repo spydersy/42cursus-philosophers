@@ -6,7 +6,7 @@
 /*   By: abelarif <abelarif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 07:07:22 by abelarif          #+#    #+#             */
-/*   Updated: 2021/08/30 15:43:29 by abelarif         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:49:30 by abelarif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,7 @@ void	assigne_forks(t_data *data)
 		data->philosophers[i].time_to_eat = data->time_to_eat;
 		data->philosophers[i].time_to_sleep = data->time_to_sleep;
 		data->philosophers[i].status_mutex = data->status_mutex;
-		if (i == 0)
-			data->philosophers[i].left_fork_mutex
-				= &data->forks_mutex[data->number_of_philosophers];
-		else
-			data->philosophers[i].left_fork_mutex = &data->forks_mutex[i - 1];
-		data->philosophers[i].right_fork_mutex = &data->forks_mutex[i];
-        if (i < data->number_of_philosophers - 1)
+		if (i < data->number_of_philosophers - 1)
 		{
 			data->philosophers[i].left_fork_mutex = &data->forks_mutex[i];
 			data->philosophers[i].right_fork_mutex = &data->forks_mutex[i + 1];
@@ -57,7 +51,7 @@ void	assigne_forks(t_data *data)
 			data->philosophers[i].left_fork_mutex = &data->forks_mutex[0];
 			data->philosophers[i].right_fork_mutex = &data->forks_mutex[i];
 		}
-    }
+	}
 }
 
 int	init_philosophers(t_data *data)
@@ -106,7 +100,6 @@ int	init_data(t_data *data, int argc, char **argv)
 	i = -1;
 	if (args_checker(argv) == -1)
 		return (-1);
-	data = malloc(sizeof(t_data) * 1);
 	if (data == NULL)
 		return (-1);
 	data->number_of_philosophers = ft_atoi(argv[1]);
